@@ -1,8 +1,10 @@
 CREATE TABLE "answer" (
   "id" SERIAL PRIMARY KEY,
-  "question" TEXT NOT NULL,
+  -- "question" TEXT NOT NULL,
   "answered" TEXT NOT NULL,
   "correct" BOOLEAN NOT NULL,
+  "question_id" INTEGER REFERENCES "question"(id)
+    ON DELETE CASCADE NOT NULL,
   "category_id" INTEGER REFERENCES "category"(id)
     ON DELETE CASCADE NOT NULL,
   "user_id" INTEGER REFERENCES "user"(id)

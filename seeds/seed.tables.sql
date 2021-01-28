@@ -46,10 +46,15 @@ VALUES
   (19, 'question 19', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
   (20, 'question 20', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4);
 
+INSERT INTO "answer" ("id", "answered", "correct", "question_id", "category_id", "user_id")
+VALUES 
+  (1, 'first answer', TRUE, 1, 1, 1);
+
 -- because we explicitly set the id fields
 -- update the sequencer for future automatic id setting
 SELECT setval('question_id_seq', (SELECT MAX(id) from "question"));
 SELECT setval('category_id_seq', (SELECT MAX(id) from "category"));
 SELECT setval('user_id_seq', (SELECT MAX(id) from "user"));
+SELECT setval('answer_id_seq', (SELECT MAX(id) from "answer"));
 
 COMMIT;
