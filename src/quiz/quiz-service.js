@@ -11,4 +11,4 @@ const QuizService = {
 
 }
 
-module.exports = LanguageService
+module.exports = QuizService

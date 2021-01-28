@@ -5,7 +5,7 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const errorHandler = require('./middleware/error-handler')
 const authRouter = require('./auth/auth-router')
-// const quizRouter = require('./quiz/quiz-router')
+const quizRouter = require('./quiz/quiz-router')
 // const adminRouter = require('./admin/admin-router')
 const userRouter = require('./user/user-router')
 
