@@ -23,26 +23,33 @@ VALUES
   (3, 'context'),
   (4, 'hooks');
 
--- INSERT INTO "word" ("id", "language_id", "original", "translation", "next")
--- VALUES
---   (1, 1, 'hola', 'hello', 2),
---   (2, 1, 'comida', 'food', 3),
---   (3, 1, 'triste', 'sad', 4),
---   (4, 1, 'feliz', 'happy', 5),
---   (5, 1, 'libro', 'book', 6),
---   (6, 1, 'playa', 'beach', 7),
---   (7, 1, 'teatro', 'theater', 8),
---   (8, 1, 'danza', 'dance', 9),
---   (9, 1, 'ejercicio', 'exercise', 10),
---   (10, 1, 'gracias', 'thank you', null);
+INSERT INTO "question" ("id", "question", "answer1", "answer2", "answer3", "answer4", "correct", "category_id")
+VALUES
+  (1, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (2, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (3, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (4, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (5, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (6, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (7, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (8, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (9, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (10, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (11, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (12, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (13, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (14, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (15, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (16, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (17, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (18, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (19, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (20, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4);
 
-
--- UPDATE "language" SET head = 1 WHERE id = 1;
-
--- -- because we explicitly set the id fields
--- -- update the sequencer for future automatic id setting
--- SELECT setval('word_id_seq', (SELECT MAX(id) from "word"));
--- SELECT setval('language_id_seq', (SELECT MAX(id) from "language"));
--- SELECT setval('user_id_seq', (SELECT MAX(id) from "user"));
+-- because we explicitly set the id fields
+-- update the sequencer for future automatic id setting
+SELECT setval('question_id_seq', (SELECT MAX(id) from "question"));
+SELECT setval('category_id_seq', (SELECT MAX(id) from "category"));
+SELECT setval('user_id_seq', (SELECT MAX(id) from "user"));
 
 COMMIT;
