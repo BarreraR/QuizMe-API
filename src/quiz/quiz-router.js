@@ -30,19 +30,40 @@ const quizRouter = express.Router()
 quizRouter
   .get('/', async (req, res, next) => {
     try {
-      const questions = await QuizService.getQuestions(
+      const quiz = await QuizService.getQuiz(
         req.app.get('db'),
         // req.user.id,
         // 1,
       )
 
       res.json({
-        questions
+        quiz
       })
       next()
     } catch (error) {
       next(error)
     }
   })
+
+  quizRouter 
+    .get('/:category', async (req, res, next) => {
+      const { category } = req.params
+
+      console.log(category)
+      try{
+        const quiz = await QuizService.getQuizWithCategory(
+          req.app.get('db'),
+          category,
+        )
+
+        res.json({
+          quiz
+        })
+
+        next()
+      } catch (error) {
+        next(error)
+      }
+    })
 
   module.exports = quizRouter
