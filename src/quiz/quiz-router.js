@@ -33,7 +33,7 @@ quizRouter
       const questions = await QuizService.getQuestions(
         req.app.get('db'),
         // req.user.id,
-        1,
+        // 1,
       )
 
       res.json({

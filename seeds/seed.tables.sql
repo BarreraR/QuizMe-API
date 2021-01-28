@@ -25,26 +25,26 @@ VALUES
 
 INSERT INTO "question" ("id", "question", "answer1", "answer2", "answer3", "answer4", "correct", "category_id")
 VALUES
-  (1, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (2, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (3, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (4, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (5, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (6, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
-  (7, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
-  (8, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
-  (9, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
-  (10, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
-  (11, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
-  (12, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
-  (13, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
-  (14, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
-  (15, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
-  (16, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
-  (17, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
-  (18, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
-  (19, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
-  (20, 'question', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4);
+  (1, 'question 1', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (2, 'question 2', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (3, 'question 3', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (4, 'question 4', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (5, 'question 5', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (6, 'question 6', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (7, 'question 7', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (8, 'question 8', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (9, 'question 9', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (10, 'question 10', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
+  (11, 'question 11', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (12, 'question 12', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (13, 'question 13', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (14, 'question 14', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (15, 'question 15', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 3),
+  (16, 'question 16', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (17, 'question 17', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (18, 'question 18', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (19, 'question 19', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4),
+  (20, 'question 20', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 4);
 
 -- because we explicitly set the id fields
 -- update the sequencer for future automatic id setting

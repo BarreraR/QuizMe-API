@@ -1,12 +1,16 @@
 const QuizService = {
-  getQuestions(db, user_id) {
+  getQuestions(db) {
     return db
-      .from('questions')
+      .from('question')
       .select(
-        'questions.question'
+        'question.question',
+        'question.answer1',
+        'question.answer2',
+        'question.answer3',
+        'question.answer4',
+        'question.correct',
+        'question.category_id',
       )
-      .where('language.user_id', user_id)
-      .first()
   },
 
 }
