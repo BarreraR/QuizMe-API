@@ -66,4 +66,37 @@ quizRouter
       }
     })
 
+  quizRouter
+    .post('/', bodyParser, async(req, res, next) => {
+      let { answered } = req.body
+
+      if(!answered)
+        return res.status(400).json({
+          error: `Missing 'answered' in request body`,
+        })
+
+      try {
+        let correct = await QuizService.getCorrectAnswer(
+          req.app.get('db'),
+          answered.question_id
+        )
+
+        correct = correct.correct === answered.answer
+        answered['correct'] = correct
+        
+        await QuizService.postAnswer(
+          req.app.get('db'),
+          // req.user.id,
+          1,
+          answered
+        )
+
+        res.json({ correct })
+
+        next()
+      } catch (error) {
+        next(error)
+      }
+    })
+
   module.exports = quizRouter
