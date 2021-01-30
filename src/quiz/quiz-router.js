@@ -28,6 +28,7 @@ const quizRouter = express.Router()
 //   })
 
 quizRouter
+  .use(requireAuth)
   .get('/', async (req, res, next) => {
     try {
       const quiz = await QuizService.getQuiz(
@@ -86,8 +87,8 @@ quizRouter
         
         await QuizService.postAnswer(
           req.app.get('db'),
-          // req.user.id,
-          1,
+          req.user.id,
+          // 1,
           answered
         )
 
