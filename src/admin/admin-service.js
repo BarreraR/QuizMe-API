@@ -13,6 +13,13 @@ const AdminService = {
       .then(id => !!id)
   },
 
+  hasQuestionId(db, id){
+    return db('question')
+      .where({ id })
+      .first()
+      .then(id => !!id)
+  },
+
   postCategory(db, category){
     return db
       .insert({ 'category': category })
@@ -29,7 +36,13 @@ const AdminService = {
     return db('category')
       .update('category',data.category)
       .where('id', data.id)
-  }
+  },
+
+  deleteQuestion(db, id) {
+    return db('question')
+      .delete()
+      .where({id})
+  },
 }
 
 module.exports = AdminService

@@ -29,7 +29,6 @@ adminRouter
       if(hasCategory)
         return res.status(400).json({ error: 'Category already exists'})
 
-      
       await AdminService.postCategory(
         req.app.get('db'),
         category
@@ -72,7 +71,7 @@ adminRouter
       )
           
       res.send({
-        status: `category with id '${id}' deleted`
+        status: `Category with id '${id}' deleted`
       })
     } catch (error) {
       next(error)
@@ -112,15 +111,14 @@ adminRouter
       res.send({
         status: `Category with id '${id}' updated`
       })
-      
         
     } catch {
       next(error)
     } 
   })
 
-// adminRouter  
-//   .post('/question', async (req, res, next) => {
+adminRouter  
+//   .post('/question', bodyParser, async (req, res, next) => {
 //     // const {  }
 //     try {
       
@@ -128,14 +126,42 @@ adminRouter
 //       next(error)
 //     }
 //   })
-//   .delete('/question', async (req, res, next) => {
-//     try {
+  .delete('/question', bodyParser, async (req, res, next) => {
+    const { id } = req.body
 
-//     } catch (error) {
-//       next(error)
-//     }
-//   })
-//   .put('/question', async (req, res, next) => {
+    if(id == null) return res.status(400).json({
+      error: `Missing 'id' in request body`
+    })
+    
+    try {
+      if(!req.user.admin){
+        return res.status(400).json({
+          error: 'Not an admin'
+        })
+      }
+
+      const hasQuestionId = await AdminService.hasQuestionId(
+        req.app.get('db'),
+        id
+      )
+
+      if(!hasQuestionId)
+        return res.status(400).json({ error: 'Question Id does not exist'})
+
+      
+      await AdminService.deleteQuestion(
+        req.app.get('db'),
+        id
+      )
+          
+      res.send({
+        status: `Question with id '${id}' deleted`
+      })
+    } catch (error) {
+      next(error)
+    }
+  })
+//   .put('/question', bodyParser, async (req, res, next) => {
 //     try {
 
 //     } catch {
