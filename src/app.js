@@ -6,7 +6,7 @@ const { NODE_ENV } = require('./config')
 const errorHandler = require('./middleware/error-handler')
 const authRouter = require('./auth/auth-router')
 const quizRouter = require('./quiz/quiz-router')
-// const adminRouter = require('./admin/admin-router')
+const adminRouter = require('./admin/admin-router')
 const userRouter = require('./user/user-router')
 
 const app = express()
@@ -19,7 +19,7 @@ app.use(helmet())
 
 app.use('/api/auth', authRouter)
 app.use('/api/quiz', quizRouter)
-// app.use('/api/admin', adminRouter)
+app.use('/api/admin', adminRouter)
 app.use('/api/user', userRouter)
 
 app.use(errorHandler)
