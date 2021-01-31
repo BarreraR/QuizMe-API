@@ -78,13 +78,46 @@ adminRouter
       next(error)
     }
   })
-//   .put('/category', async (req, res, next) => {
-//     try {
+  .put('/category', bodyParser, async (req, res, next) => {
+    const { id, category } = req.body
+    const categoryData = { id, category }
 
-//     } catch {
-//       next(error)
-//     } 
-//   })
+    for (const [key, value] of Object.entries(categoryData)){
+      if(value == null) return res.status(400).json({
+        error: `Missing '${key}' in request body`
+      })
+    }
+
+    try {
+
+      if(!req.user.admin){
+        return res.status(400).json({
+          error: 'Not an admin'
+        })
+      }
+
+      const hasCategoryId = await AdminService.hasCategoryId(
+        req.app.get('db'),
+        id
+      )
+
+      if(!hasCategoryId)
+        return res.status(400).json({ error: 'Category Id does not exist'})
+
+      await AdminService.putCategory(
+        req.app.get('db'),
+        categoryData
+      )
+
+      res.send({
+        status: `Category with id '${id}' updated`
+      })
+      
+        
+    } catch {
+      next(error)
+    } 
+  })
 
 // adminRouter  
 //   .post('/question', async (req, res, next) => {

@@ -23,6 +23,12 @@ const AdminService = {
     return db('category')
       .delete()
       .where({id})
+  },
+
+  putCategory(db, data){
+    return db('category')
+      .update('category',data.category)
+      .where('id', data.id)
   }
 }
 
