@@ -38,6 +38,11 @@ const AdminService = {
       .where('id', data.id)
   },
 
+  postQuestion(db, question){
+    return db('question')
+      .insert(question)
+  },
+
   deleteQuestion(db, id) {
     return db('question')
       .delete()

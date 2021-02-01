@@ -62,8 +62,7 @@ adminRouter
       )
 
       if(!hasCategoryId)
-        return res.status(400).json({ error: 'Category Id does not exist'})
-
+        return res.status(400).json({ error: `Category with Id '${id}' does not exist`})
       
       await AdminService.deleteCategory(
         req.app.get('db'),
@@ -118,14 +117,36 @@ adminRouter
   })
 
 adminRouter  
-//   .post('/question', bodyParser, async (req, res, next) => {
-//     // const {  }
-//     try {
+  .post('/question', bodyParser, async (req, res, next) => {
+    const { question, answer1, answer2, answer3, answer4, correct, category_id } = req.body
+    const newQuestion = { question, answer1, answer2, answer3, answer4, correct, category_id }  
+
+    for (const [key, value] of Object.entries(newQuestion)){
+      if(value == null) return res.status(400).json({
+        error: `Missing '${key}' in request body`
+      })
+    }
+
+    try {
+      if(!req.user.admin){
+        return res.status(400).json({
+          error: 'Not an admin'
+        })
+      }
+
+      await AdminService.postQuestion(
+        req.app.get('db'),
+        newQuestion
+      )
+          
+      res.send({
+        status: `Question created`
+      })
       
-//     } catch (error) {
-//       next(error)
-//     }
-//   })
+    } catch (error) {
+      next(error)
+    }
+  })
   .delete('/question', bodyParser, async (req, res, next) => {
     const { id } = req.body
 
@@ -146,9 +167,8 @@ adminRouter
       )
 
       if(!hasQuestionId)
-        return res.status(400).json({ error: 'Question Id does not exist'})
+        return res.status(400).json({ error: `Question with Id '${id}' does not exist`})
 
-      
       await AdminService.deleteQuestion(
         req.app.get('db'),
         id
