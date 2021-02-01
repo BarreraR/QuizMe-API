@@ -46,8 +46,26 @@ quizRouter
     }
   })
 
+  quizRouter
+    .get('/category', async (req, res, next) => {
+      try {
+        const categories = await QuizService.getCategories(
+          req.app.get('db'),
+          // req.user.id,
+          // 1,
+        )
+  
+        res.json({
+          categories
+        })
+        next()
+      } catch (error) {
+        next(error)
+      }  
+    })
+
   quizRouter 
-    .get('/:category', async (req, res, next) => {
+    .get('/category/:category', async (req, res, next) => {
       const { category } = req.params
 
       console.log(category)

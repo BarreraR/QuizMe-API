@@ -2,15 +2,13 @@ const QuizService = {
   getQuiz(db) {
     return db
       .from('question')
-      .select(
-        'question.question',
-        'question.answer1',
-        'question.answer2',
-        'question.answer3',
-        'question.answer4',
-        'question.correct',
-        'question.category_id',
-      )
+      .select('*')
+  },
+
+  getCategories(db) {
+    return db
+      .from('category')
+      .select('*')
   },
 
   getQuizWithCategory(db, category) {
