@@ -48,6 +48,20 @@ const AdminService = {
       .delete()
       .where({id})
   },
+
+  putQuestion(db, data){
+    return db('question')
+      .update({
+        'question': data.question,
+        'answer1': data.answer1,
+        'answer2': data.answer2,
+        'answer3': data.answer3,
+        'answer4': data.answer4,
+        'correct': data.correct,
+        'category_id': data.category_id
+      })
+      .where('id', data.id)
+  },
 }
 
 module.exports = AdminService

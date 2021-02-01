@@ -100,7 +100,7 @@ adminRouter
       )
 
       if(!hasCategoryId)
-        return res.status(400).json({ error: 'Category Id does not exist'})
+        return res.status(400).json({ error: `Category with Id '${id}' does not exist`})
 
       await AdminService.putCategory(
         req.app.get('db'),
@@ -181,12 +181,43 @@ adminRouter
       next(error)
     }
   })
-//   .put('/question', bodyParser, async (req, res, next) => {
-//     try {
+  .put('/question', bodyParser, async (req, res, next) => {
+    const { question, answer1, answer2, answer3, answer4, correct, category_id, id } = req.body
+    const questionData = { question, answer1, answer2, answer3, answer4, correct, category_id, id }  
+    
+    for (const [key, value] of Object.entries(questionData)){
+      if(value == null) return res.status(400).json({
+        error: `Missing '${key}' in request body`
+      })
+    }
 
-//     } catch {
-//       next(error)
-//     } 
-//   })
+    try {
+      if(!req.user.admin){
+        return res.status(400).json({
+          error: 'Not an admin'
+        })
+      }
+
+      const hasQuestionId = await AdminService.hasQuestionId(
+        req.app.get('db'),
+        id
+      )
+
+      if(!hasQuestionId)
+        return res.status(400).json({ error: `Question with Id '${id}' does not exist`})      
+
+      await AdminService.putQuestion(
+        req.app.get('db'),
+        questionData
+      )
+  
+      res.send({
+        status: `Question with id '${id}' updated`
+      })  
+
+    } catch(error) {
+      next(error)
+    } 
+  })
 
 module.exports = adminRouter
