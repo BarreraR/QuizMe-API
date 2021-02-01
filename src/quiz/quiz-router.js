@@ -88,7 +88,6 @@ quizRouter
   quizRouter
     .post('/', bodyParser, async(req, res, next) => {
       let { answered } = req.body
-
       if(!answered)
         return res.status(400).json({
           error: `Missing 'answered' in request body`,

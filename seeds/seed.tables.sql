@@ -25,9 +25,9 @@ VALUES
 
 INSERT INTO "question" ("id", "question", "answer1", "answer2", "answer3", "answer4", "correct", "category_id")
 VALUES
-  (1, 'question 1', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (1, 'question 1', 'a', 'b', 'c', 'd', 'c', 1),
   (2, 'question 2', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
-  (3, 'question 3', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
+  (3, 'question 3', 'e', 'f', 'g', 'h', 'h', 1),
   (4, 'question 4', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
   (5, 'question 5', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 1),
   (6, 'question 6', 'first answer', 'second answer', 'third answer', 'fourth answer', 'first answer', 2),
