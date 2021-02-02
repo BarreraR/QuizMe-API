@@ -2,25 +2,25 @@ const QuizService = {
   getQuiz(db) {
     return db
       .from('question')
-      .select('*')
+      .select('*');
   },
 
   getCategories(db) {
     return db
       .from('category')
-      .select('*')
+      .select('*');
   },
 
   getQuizWithCategory(db, category) {
     const category_id = db('category')
       .select('category.id')
       .where('category', category)
-      .first()
+      .first();
 
     return db
       .from('question')
       .select('*')
-      .where('question.category_id', category_id)
+      .where('question.category_id', category_id);
   },
 
   postAnswer(db, user_id, answered) {
@@ -32,7 +32,7 @@ const QuizService = {
         'question_id': answered.question_id,
         'correct': answered.correct
       })
-      .into('answer')
+      .into('answer');
   },
 
   getCorrectAnswer(db, question_id){
@@ -40,8 +40,14 @@ const QuizService = {
       .from('question')
       .select('question.correct')
       .where('question.id', question_id)
-      .first()
+      .first();
   },
+
+  getAnswers(db, user_id){
+    return db('answer')
+      .select('*')
+      .where('answer.user_id', user_id);
+  }
 
 }
 

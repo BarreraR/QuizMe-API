@@ -51,8 +51,6 @@ quizRouter
       try {
         const categories = await QuizService.getCategories(
           req.app.get('db'),
-          // req.user.id,
-          // 1,
         )
   
         res.json({
@@ -105,12 +103,28 @@ quizRouter
         await QuizService.postAnswer(
           req.app.get('db'),
           req.user.id,
-          // 1,
           answered
         )
 
         res.json({ correct })
 
+        next()
+      } catch (error) {
+        next(error)
+      }
+    })
+
+  quizRouter
+    .get('/answers', async (req, res, next) => {
+      try {
+        const answers = await QuizService.getAnswers(
+          req.app.get('db'),
+          req.user.id,
+        )
+  
+        res.json({
+          answers
+        })
         next()
       } catch (error) {
         next(error)
