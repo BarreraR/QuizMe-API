@@ -42,7 +42,6 @@ const AdminService = {
   },
 
   postQuestion(db, question){
-    console.log(question)
     return db('question')
       .insert(question)
       .then(() => db('question')
