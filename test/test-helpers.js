@@ -22,14 +22,14 @@ function makeUsersArray() {
     {
       id: 1,
       username: 'test-user-1',
-      admin: true,
       password: 'password',
+      admin: true,
     },
     {
       id: 2,
       username: 'test-user-2',
-      admin: false,
       password: 'password',
+      admin: false,
     },
   ]
 }
@@ -99,48 +99,101 @@ function seedUsers(db, users) {
   })
 }
 
-// /**
-//  * seed the databases with words and update sequence counter
-//  * @param {knex instance} db
-//  * @param {array} users - array of user objects for insertion
-//  * @param {array} languages - array of languages objects for insertion
-//  * @param {array} words - array of words objects for insertion
-//  * @returns {Promise} - when all tables seeded
-//  */
-// async function seedUsersLanguagesWords(db, users, languages, words) {
-//   await seedUsers(db, users)
+/**
+ * generate fixtures of categories and questions 
+ * @param {object} user - contains `id` property
+ * @returns {Array(questions, categories, answers)} - arrays of languages and words
+ */
+function makeCQA(user) {
+  const categories = [
+    {
+      id: 1,
+      category: 'hooks'
+    },
+    {
+      id: 2,
+      category: 'state'
+    },
+  ]
 
-//   await db.transaction(async trx => {
-//     await trx.into('language').insert(languages)
-//     await trx.into('word').insert(words)
+  // "id", "question", "answer1", "answer2", "answer3", "answer4", "correct", "category_id"
+  const questions = [
+    {
+      id: 1, 
+      question: 'Question 1',
+      answer1: 'Answer 1',
+      answer2: 'Answer 2',
+      answer3: 'Answer 3',
+      answer4: 'Answer 4',
+      correct: 'Answer 1',
+      category_id: 1
+    },
+    {
+      id: 2, 
+      question: 'Question 2',
+      answer1: 'Answer 1',
+      answer2: 'Answer 2',
+      answer3: 'Answer 3',
+      answer4: 'Answer 4',
+      correct: 'Answer 3',
+      category_id: 2
+    },
+  ]
 
-//     const languageHeadWord = words.find(
-//       w => w.language_id === languages[0].id
-//     )
+  // "id", "answered", "correct", "question_id", "category_id", "user_id"
+  const answers = [
+    {
+      id: 1,
+      answered: 'Answer 1',
+      correct: true,
+      question_id: 1,
+      category_id: 1,
+      user_id: user.id
+    },
+    {
+      id: 2,
+      answered: 'Answer 1',
+      correct: false,
+      question_id: 1,
+      category_id: 1,
+      user_id: user.id
+    },
+  ]
+  
+  return [categories, questions, answers]
+}
 
-//     await trx('language')
-//       .update({ head: languageHeadWord.id })
-//       .where('id', languages[0].id)
+async function seedUCQA(db, users, categories, questions, answers) {
+  await seedUsers(db, users)
 
-//     await Promise.all([
-//       trx.raw(
-//         `SELECT setval('language_id_seq', ?)`,
-//         [languages[languages.length - 1].id],
-//       ),
-//       trx.raw(
-//         `SELECT setval('word_id_seq', ?)`,
-//         [words[words.length - 1].id],
-//       ),
-//     ])
-//   })
-// }
+  await db.transaction(async trx => {
+    await trx.into('category').insert(categories)
+    await trx.into('question').insert(questions)
+    await trx.into('answer').insert(answers)
+
+    await Promise.all([
+      trx.raw(
+        `SELECT setval('category_id_seq', ?)`,
+        [categories[categories.length - 1].id],
+      ),
+      trx.raw(
+        `SELECT setval('question_id_seq', ?)`,
+        [questions[questions.length - 1].id],
+      ),
+      trx.raw(
+        `SELECT setval('answer_id_seq', ?)`,
+        [answers[answers.length - 1].id],
+      ),
+    ])
+  })
+}
 
 module.exports = {
   makeKnexInstance,
   makeUsersArray,
-  // makeLanguagesAndWords,
+  makeCQA,
   makeAuthHeader,
   cleanTables,
   seedUsers,
-  // seedUsersLanguagesWords,
+  seedUCQA,
 }
