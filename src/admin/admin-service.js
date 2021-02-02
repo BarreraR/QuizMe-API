@@ -24,6 +24,9 @@ const AdminService = {
     return db
       .insert({ 'category': category })
       .into('category')
+      .then(() => db('category')
+        .select('*')
+        .where('category', category))
   },
 
   deleteCategory(db, id) {

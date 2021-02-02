@@ -29,13 +29,13 @@ adminRouter
       if(hasCategory)
         return res.status(400).json({ error: 'Category already exists'})
 
-      await AdminService.postCategory(
+      const data = await AdminService.postCategory(
         req.app.get('db'),
         category
       )
-          
+
       res.send({
-        status: `category '${category}' created`
+        category: data[0]
       })
       
     } catch (error) {
