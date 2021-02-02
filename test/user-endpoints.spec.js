@@ -25,13 +25,12 @@ describe('User Endpoints', function () {
   describe(`POST /api/user`, () => {
     beforeEach('insert users', () => helpers.seedUsers(db, testUsers))
 
-    const requiredFields = ['username', 'password', 'name']
+    const requiredFields = ['username', 'password']
 
     requiredFields.forEach(field => {
       const registerAttemptBody = {
         username: 'test username',
         password: 'test password',
-        name: 'test name',
       }
 
       it(`responds with 400 required error when '${field}' is missing`, () => {
@@ -50,7 +49,7 @@ describe('User Endpoints', function () {
       const userShortPassword = {
         username: 'test username',
         password: '1234567',
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -62,7 +61,7 @@ describe('User Endpoints', function () {
       const userLongPassword = {
         username: 'test username',
         password: '*'.repeat(73),
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -74,7 +73,7 @@ describe('User Endpoints', function () {
       const userPasswordStartsSpaces = {
         username: 'test username',
         password: ' 1Aa!2Bb@',
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -86,7 +85,7 @@ describe('User Endpoints', function () {
       const userPasswordEndsSpaces = {
         username: 'test username',
         password: '1Aa!2Bb@ ',
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -98,7 +97,7 @@ describe('User Endpoints', function () {
       const userPasswordNotComplex = {
         username: 'test username',
         password: '11AAaabb',
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -110,7 +109,7 @@ describe('User Endpoints', function () {
       const duplicateUser = {
         username: testUser.username,
         password: '11AAaa!!',
-        name: 'test name',
+        admin: 'false',
       }
       return supertest(app)
         .post('/api/user')
@@ -123,7 +122,6 @@ describe('User Endpoints', function () {
         const newUser = {
           username: 'test username',
           password: '11AAaa!!',
-          name: 'test name',
         }
         return supertest(app)
           .post('/api/user')
@@ -132,9 +130,8 @@ describe('User Endpoints', function () {
           .expect(res => {
             expect(res.body).to.have.property('id')
             expect(res.body.username).to.eql(newUser.username)
-            expect(res.body.name).to.eql(newUser.name)
             expect(res.body).to.not.have.property('password')
-            expect(res.headers.location).to.eql(`/api/user/${res.body.id}`)
+            // expect(res.headers.location).to.eql(`/api/user/${res.body.id}`)
           })
       })
 
@@ -142,7 +139,7 @@ describe('User Endpoints', function () {
         const newUser = {
           username: 'test username',
           password: '11AAaa!!',
-          name: 'test name',
+          admin: 'false',
         }
         return supertest(app)
           .post('/api/user')
@@ -155,7 +152,7 @@ describe('User Endpoints', function () {
               .first()
               .then(row => {
                 expect(row.username).to.eql(newUser.username)
-                expect(row.name).to.eql(newUser.name)
+                expect(row.admin).to.eql(newUser.admin)
 
                 return bcrypt.compare(newUser.password, row.password)
               })
@@ -163,73 +160,6 @@ describe('User Endpoints', function () {
                 expect(compareMatch).to.be.true
               })
           )
-      })
-
-      it(`inserts 1 language with words for the new user`, () => {
-        const newUser = {
-          username: 'test username',
-          password: '11AAaa!!',
-          name: 'test name',
-        }
-        const expectedList = {
-          name: 'Spanish',
-          total_score: 0,
-          words: [
-            { original: 'hola', translation: 'hello' },
-            { original: 'comida', translation: 'food' },
-            { original: 'triste', translation: 'sad' },
-            { original: 'feliz', translation: 'happy' },
-            { original: 'libro', translation: 'book' },
-            { original: 'playa', translation: 'beach' },
-            { original: 'teatro', translation: 'theater' },
-            { original: 'danza', translation: 'dance' },
-            { original: 'ejercicio', translation: 'exercise' },
-            { original: 'gracias', translation: 'thank you' },
-        
-          ]
-        }
-        return supertest(app)
-          .post('/api/user')
-          .send(newUser)
-          .then(res =>
-            /*
-            get languages and words for user that were inserted to db
-            */
-            db.from('language').select(
-              'language.*',
-              db.raw(
-                `COALESCE(
-                  json_agg(DISTINCT word)
-                  filter(WHERE word.id IS NOT NULL),
-                  '[]'
-                ) AS words`
-              ),
-            )
-            .leftJoin('word', 'word.language_id', 'language.id')
-            .groupBy('language.id')
-            .where({ user_id: res.body.id })
-          )
-          .then(dbLists => {
-            expect(dbLists).to.have.length(1)
-
-            expect(dbLists[0].name).to.eql(expectedList.name)
-            expect(dbLists[0].total_score).to.eql(0)
-
-            const dbWords = dbLists[0].words
-            expect(dbWords).to.have.length(
-              expectedList.words.length
-            )
-
-            expectedList.words.forEach((expectedWord, w) => {
-              expect(dbWords[w].original).to.eql(
-                expectedWord.original
-              )
-              expect(dbWords[w].translation).to.eql(
-                expectedWord.translation
-              )
-              expect(dbWords[w].memory_value).to.eql(1)
-            })
-          })
       })
     })
   })
