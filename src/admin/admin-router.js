@@ -120,7 +120,7 @@ adminRouter
   .post('/question', bodyParser, async (req, res, next) => {
     const { question, answer1, answer2, answer3, answer4, correct, category_id } = req.body
     const newQuestion = { question, answer1, answer2, answer3, answer4, correct, category_id }  
-
+    console.log(newQuestion)
     for (const [key, value] of Object.entries(newQuestion)){
       if(value == null) return res.status(400).json({
         error: `Missing '${key}' in request body`
@@ -134,13 +134,13 @@ adminRouter
         })
       }
 
-      await AdminService.postQuestion(
+      const data = await AdminService.postQuestion(
         req.app.get('db'),
         newQuestion
       )
-          
+          console.log(data[0])
       res.send({
-        status: `Question created`
+        question: data[0]
       })
       
     } catch (error) {
