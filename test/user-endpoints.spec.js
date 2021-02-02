@@ -25,12 +25,13 @@ describe('User Endpoints', function () {
   describe(`POST /api/user`, () => {
     beforeEach('insert users', () => helpers.seedUsers(db, testUsers))
 
-    const requiredFields = ['username', 'password']
+    const requiredFields = ['username', 'password', 'admin']
 
     requiredFields.forEach(field => {
       const registerAttemptBody = {
         username: 'test username',
         password: 'test password',
+        admin: 'false',
       }
 
       it(`responds with 400 required error when '${field}' is missing`, () => {
@@ -122,6 +123,7 @@ describe('User Endpoints', function () {
         const newUser = {
           username: 'test username',
           password: '11AAaa!!',
+          admin: 'false',
         }
         return supertest(app)
           .post('/api/user')
@@ -131,7 +133,7 @@ describe('User Endpoints', function () {
             expect(res.body).to.have.property('id')
             expect(res.body.username).to.eql(newUser.username)
             expect(res.body).to.not.have.property('password')
-            // expect(res.headers.location).to.eql(`/api/user/${res.body.id}`)
+            expect(res.headers.location).to.eql(`/api/user/${res.body.id}`)
           })
       })
 
