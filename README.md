@@ -5,7 +5,7 @@ Live Link: https://capstone3-quizme.herokuapp.com/api
 ---
 ## Description:
 
-API for [QuizMe](https://quizme.vercel.app/) application. The API stores quiz categories, questions, and user answers to collect data and allow administrators of the web page to create informed decisions about their teaching practices based on student's responses.  User registration and login required. Once logged in, token is provided which contains user information and whether a user is an admin. Without the token, an unauthorized request message will be returned.
+API for [QuizMe](https://quizme.vercel.app/) application. The API stores quiz categories, questions, and user answers to collect data and allow administrators of the web page to create informed decisions about their teaching practices based on student's responses. User registration and login required. Once logged in, token is provided which contains user information and whether a user is an admin. Without the token, an unauthorized request message will be returned.
 
 ---
 ## Stack Used:
